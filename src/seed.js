@@ -16,11 +16,6 @@ export const SEED = {
     "salt": "jo7x8HXyMrQrU09Mbedu2A==",
     "hash": "dTgIOzZxSa71FQFnqwz+GvSTeN7dI5R/bBg4RIKWIDo="
   },
-  "christian": {
-    "name": "Christian",
-    "salt": "urDE9nA4ToYYSuqfrksE+A==",
-    "hash": "8NPZRW90WTyLc6Bzjvr5ItG5wgvIwEy+saCEfWqQZus="
-  },
   "hedy": {
     "name": "Hedy",
     "salt": "EZWGyvOlWvvnCNZyoHnq9Q==",

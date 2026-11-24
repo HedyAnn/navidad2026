@@ -3,15 +3,14 @@
   const db = {
     members: [
       { id: "mario", name: "Mario", enabled: true }, { id: "maria-angelica", name: "María Angélica", enabled: true },
-      { id: "maria-jesus", name: "María Jesús", enabled: true }, { id: "christian", name: "Christian", enabled: true },
-      { id: "hedy", name: "Hedy", enabled: true },
+      { id: "maria-jesus", name: "María Jesús", enabled: true },       { id: "hedy", name: "Hedy", enabled: true },
     ],
     wishes: {
       mario: [{ id: "a1", title: "Libro de historia", description: "Sobre la Segunda Guerra Mundial, de preferencia de Antony Beevor.", link: "https://www.buscalibre.cl", image: "" },
               { id: "a2", title: "Perfume", description: "Algo fresco, nada muy dulce.", link: "", image: "" },
               { id: "a3", title: "Accesorios tecnológicos", description: "", link: "", image: "" }],
       "maria-angelica": [{ id: "b1", title: "Pantuflas abrigadas", description: "Talla 37", link: "", image: "" }],
-      "maria-jesus": [], christian: [],
+      "maria-jesus": [],
       hedy: [{ id: "c1", title: "Libro de fantasía", description: "", link: "", image: "" }, { id: "c2", title: "Agenda 2027", description: "", link: "", image: "" }],
     },
     draw: { done: false }, assign: {}, revealed: {}, user: null,
