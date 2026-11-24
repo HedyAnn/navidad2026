@@ -86,6 +86,7 @@ Todas las respuestas son JSON. Las rutas marcadas con 🔒 exigen sesión.
 | `GET /api/admin/state` 🔒 | Admin | Estado general (sin asignaciones) |
 | `POST /api/admin/members` 🔒 | Admin | Agregar integrante |
 | `PUT /api/admin/members/:id` 🔒 | Admin | Cambiar nombre o participación |
+| `DELETE /api/admin/members/:id` 🔒 | Admin | Eliminar integrante (borra contraseña, lista y sesiones; bloqueado si ya está en un sorteo hecho) |
 | `POST /api/admin/members/:id/password` 🔒 | Admin | Restablecer contraseña |
 | `POST /api/admin/draw` 🔒 | Admin | Hacer el sorteo (una sola vez) |
 | `POST /api/admin/draw/reset` 🔒 | Admin | Reiniciar, exige escribir `REINICIAR` |

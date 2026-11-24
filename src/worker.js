@@ -331,6 +331,16 @@ export class Casa extends DurableObject {
         for (const [k, v] of all) if (v.uid === m.id) await this.storage.delete(k);
         return json({ ok: true });
       }
+      if (!mm[2] && method === "DELETE") {
+        if (draw.done && (draw.participants || []).includes(m.id))
+          return fail(400, "Esta persona ya está en el sorteo. Reinicia el sorteo antes de eliminarla.");
+        members = members.filter((x) => x.id !== m.id);
+        await this.storage.put("members", members);
+        for (const k of ["pw:", "wishes:", "revealed:", "lock:", "assign:"]) await this.storage.delete(k + m.id);
+        const all = await this.storage.list({ prefix: "sess:" });
+        for (const [k, v] of all) if (v.uid === m.id) await this.storage.delete(k);
+        return json({ ok: true });
+      }
       if (!mm[2] && method === "PUT") {
         if (typeof body.name === "string") {
           const name = clean(body.name, 40);

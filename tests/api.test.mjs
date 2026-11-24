@@ -78,6 +78,18 @@ test("flujo completo con privacidad del sorteo", async () => {
   assert.equal((await admin.call("/admin/draw/reset", "POST", { confirm: "REINICIAR" })).status, 200);
 });
 
+test("administración puede agregar y eliminar integrantes", async () => {
+  const admin = await login("admin");
+  assert.equal((await admin.call("/admin/members", "POST", { name: "Prueba Temporal", password: "secreto123" })).status, 200);
+  const t = await login("prueba-temporal", "secreto123");
+  assert.equal(t.status, 200);
+  assert.notEqual((await t.call("/admin/members/hedy", "DELETE")).status, 200);
+  assert.equal((await admin.call("/admin/members/prueba-temporal", "DELETE")).status, 200);
+  assert.equal((await t.call("/me")).status, 401, "su sesión se cierra");
+  const list = await fetch(BASE + "/api/members").then((r) => r.json());
+  assert.ok(!list.members.some((m) => m.id === "prueba-temporal"));
+});
+
 test("otro sitio no puede enviar acciones", async () => {
   const r = await fetch(BASE + "/api/login", { method: "POST", headers: { "content-type": "application/json", origin: "https://malo.example" }, body: "{}" });
   assert.equal(r.status, 403);

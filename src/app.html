@@ -760,12 +760,20 @@ function memberDialog(m) {
       <input type="text" name="password" autocomplete="off" maxlength="100"></label>
     <p class="error hidden" role="alert"></p>
     <div class="row" style="justify-content:flex-end">
+      ${m ? `<button type="button" class="btn quiet" id="remove" style="color:var(--cherry);margin-right:auto">Eliminar integrante</button>` : ""}
       <button type="button" class="btn quiet" id="cancel">Cancelar</button>
       <button type="submit" class="btn">${m ? "Guardar cambios" : "Agregar integrante"}</button>
     </div></form>`;
   document.body.appendChild(dlg); dlg.showModal();
   dlg.addEventListener("close", () => dlg.remove());
   dlg.querySelector("#cancel").onclick = () => dlg.close();
+  dlg.querySelector("#remove")?.addEventListener("click", async () => {
+    dlg.close();
+    const ok = await confirmBox(`¿Eliminar a ${m.name}?`, "Eliminar", { detail: "Ya no aparecerá para entrar, y se borrarán su contraseña y su lista de deseos. No se puede deshacer." });
+    if (!ok) return;
+    try { await api("/admin/members/" + m.id, { method: "DELETE" }); state.members = []; toast(m.name + " fue eliminado"); renderAdmin(); }
+    catch (ex) { toast(ex.message); }
+  });
   const form = dlg.querySelector("form"), err = form.querySelector(".error");
   form.onsubmit = async (e) => {
     e.preventDefault(); err.classList.add("hidden");
