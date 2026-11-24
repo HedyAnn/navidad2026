@@ -20,7 +20,7 @@ export default {
       return stub.fetch(request);
     }
     if (url.pathname === "/familia.jpg") {
-      return new Response(FAMILIA, { headers: { "content-type": "image/jpeg", "cache-control": "public, max-age=86400" } });
+      return new Response(FAMILIA, { headers: { "content-type": "image/jpeg", "cache-control": "public, max-age=3600" } });
     }
     return new Response(APP_HTML, {
       headers: {
