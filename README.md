@@ -13,3 +13,7 @@ Funciona en Cloudflare Workers (gratis). La documentación técnica está en [do
 npm install
 npm run dev   # http://127.0.0.1:8787
 ```
+
+## Administración
+
+Desde "Entrar como administración" se pueden agregar, editar, sacar del sorteo o eliminar integrantes, restablecer contraseñas y hacer el sorteo cuando todos estén listos.
