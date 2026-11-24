@@ -1,0 +1,14 @@
+name = "navidad2026"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+[[durable_objects.bindings]]
+name = "CASA"
+class_name = "Casa"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Casa"]
+
+[observability]
+enabled = true

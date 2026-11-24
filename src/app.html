@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Navidad en Familia</title>
+<meta name="theme-color" content="#1d4634">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l9 13h-5l7 10H5l7-10H7z' fill='%231d4634'/%3E%3Ccircle cx='16' cy='4' r='3' fill='%23c9a45c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pine:#1d4634; --pine-deep:#12301f; --pine-soft:#e3ebe4;
+  --cherry:#b3263a; --cherry-deep:#8e1b2c;
+  --cream:#f5eee0; --paper:#fffaf2; --gold:#c39a4e; --gold-soft:#efe1c0;
+  --ink:#2a2520; --muted:#6c6357; --line:#e6dccb;
+  --ok:#2f6b47;
+  --r-lg:22px; --r-md:14px; --r-sm:10px;
+  --display:"Young Serif", Georgia, serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font:400 17px/1.55 var(--body);min-height:100vh;
+  background-image:radial-gradient(circle at 12% 8%, rgba(195,154,78,.10) 0 2px, transparent 3px),
+                   radial-gradient(circle at 70% 30%, rgba(29,70,52,.06) 0 2px, transparent 3px);
+  background-size:140px 140px, 190px 190px;}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;margin:0;color:var(--pine-deep)}
+h1{font-size:clamp(30px,8vw,40px)} h2{font-size:26px} h3{font-size:20px}
+p{margin:0}
+a{color:var(--pine)}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.small{font-size:15px}
+
+/* ---- estructura ---- */
+.shell{max-width:620px;margin:0 auto;padding:0 16px calc(96px + env(safe-area-inset-bottom))}
+.garland{display:block;width:100%;height:46px;color:var(--pine)}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
+.brand{font-family:var(--display);font-size:19px;color:var(--pine-deep);display:flex;align-items:center;gap:8px;text-decoration:none}
+.brand svg{width:22px;height:22px}
+.view{animation:enter .35s ease both}
+@keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* navegación inferior en teléfono, arriba en pantallas grandes */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);
+  display:flex;justify-content:center;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+.tabs a{flex:1;max-width:130px;display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;
+  color:var(--muted);font-size:12.5px;font-weight:600;padding:6px 2px;border-radius:12px}
+.tabs a svg{width:24px;height:24px}
+.tabs a[aria-current="page"]{color:var(--cherry)}
+@media (min-width:760px){
+  .tabs{position:sticky;top:0;bottom:auto;border:0;border-bottom:1px solid var(--line);background:rgba(255,250,242,.94);backdrop-filter:blur(6px)}
+  .tabs a{flex-direction:row;gap:8px;font-size:15px;max-width:none;flex:0 0 auto;padding:10px 16px}
+  .tabs a svg{width:20px;height:20px}
+  .shell{padding-bottom:60px}
+}
+
+/* ---- tarjetas y piezas ---- */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px}
+.stack{display:grid;gap:16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{appearance:none;border:0;border-radius:999px;padding:13px 22px;font-weight:700;font-size:16px;cursor:pointer;
+  background:var(--pine);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;text-decoration:none}
+.btn:hover{background:var(--pine-deep)}
+.btn.red{background:var(--cherry)} .btn.red:hover{background:var(--cherry-deep)}
+.btn.ghost{background:transparent;color:var(--pine);box-shadow:inset 0 0 0 1.5px var(--pine)}
+.btn.ghost:hover{background:var(--pine-soft)}
+.btn.quiet{background:transparent;color:var(--muted);padding:10px 12px;min-height:40px;font-weight:600}
+.btn.quiet:hover{color:var(--ink)}
+.btn.block{width:100%}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:600;background:var(--pine-soft);color:var(--pine)}
+.pill.gold{background:var(--gold-soft);color:#7a5a1c}
+.pill.red{background:#f6dfe2;color:var(--cherry-deep)}
+label.field{display:grid;gap:6px;font-weight:600;font-size:15px}
+.field .hint{font-weight:400;color:var(--muted);font-size:14px}
+input[type=text],input[type=password],input[type=url],textarea{width:100%;border:1.5px solid var(--line);background:#fff;border-radius:var(--r-md);
+  padding:12px 14px;font-size:17px;min-height:48px}
+input:focus,textarea:focus{border-color:var(--pine);outline:none;box-shadow:0 0 0 3px rgba(29,70,52,.15)}
+textarea{min-height:84px;resize:vertical}
+.error{color:var(--cherry-deep);font-weight:600;font-size:15px}
+.toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--pine-deep);color:#fff;
+  padding:12px 20px;border-radius:999px;font-weight:600;z-index:50;box-shadow:0 8px 24px rgba(18,48,31,.25);max-width:calc(100% - 32px);text-align:center}
+
+/* ---- ingreso ---- */
+.login{max-width:460px;margin:0 auto;padding:10px 16px 40px}
+.login-hero{text-align:center;padding:8px 0 22px}
+.login-hero .tree{width:92px;height:110px;margin:0 auto 10px;display:block}
+.login-hero p{color:var(--muted);margin-top:10px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.who input{position:absolute;opacity:0;pointer-events:none}
+.who label{display:flex;align-items:center;gap:10px;padding:12px;border:1.5px solid var(--line);border-radius:var(--r-md);background:#fff;cursor:pointer;font-weight:600;min-height:56px}
+.who label:hover{border-color:var(--gold)}
+.who input:checked+label{border-color:var(--pine);background:var(--pine-soft)}
+.who input:focus-visible+label{outline:3px solid var(--gold);outline-offset:2px}
+.initial{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:17px}
+
+/* ---- inicio ---- */
+.hello{padding:4px 2px 6px}
+.hello p{color:var(--muted);margin-top:8px;max-width:46ch}
+.home-card{display:grid;gap:12px;text-decoration:none;color:inherit;position:relative;overflow:hidden}
+.home-card:hover{border-color:var(--gold)}
+.home-card .head{display:flex;align-items:center;gap:12px}
+.home-card .icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.home-card .icon svg{width:26px;height:26px}
+.mini-list{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.mini-list li{display:flex;gap:8px;align-items:baseline}
+.mini-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;transform:translateY(-2px)}
+.meter{display:flex;gap:5px}
+.meter span{flex:1;height:7px;border-radius:4px;background:var(--line)}
+.meter span.on{background:var(--cherry)}
+
+/* ---- lista de deseos ---- */
+.wish{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.wish .thumb{width:72px;height:72px;border-radius:12px;object-fit:cover;background:var(--gold-soft);display:grid;place-items:center;color:#a07c35}
+.wish .thumb svg{width:30px;height:30px}
+.wish h3{font-size:19px;word-break:break-word}
+.wish .desc{color:var(--muted);margin-top:4px;white-space:pre-wrap;word-break:break-word}
+.wish .actions{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.wish a.ext{display:inline-block;margin-top:6px;font-weight:600;word-break:break-all;font-size:15px}
+.empty{text-align:center;padding:30px 20px}
+.empty svg{width:70px;height:70px;color:var(--gold)}
+.photo-pick{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.photo-pick img{width:80px;height:80px;object-fit:cover;border-radius:12px}
+
+/* ---- amigo secreto: el regalo ---- */
+.reveal-stage{display:grid;place-items:center;padding:12px 0 4px;text-align:center}
+.giftbox{position:relative;width:200px;height:200px;margin:18px auto 8px;cursor:pointer;border:0;background:none;padding:0;display:block}
+.giftbox .box{position:absolute;left:18px;right:18px;bottom:0;height:128px;background:var(--cherry);border-radius:8px 8px 12px 12px;
+  box-shadow:inset 0 -14px 0 rgba(0,0,0,.10)}
+.giftbox .box::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:26px;transform:translateX(-50%);background:var(--gold)}
+.giftbox .lid{position:absolute;left:8px;right:8px;top:46px;height:42px;background:var(--cherry-deep);border-radius:8px;
+  transition:transform .9s cubic-bezier(.3,1.4,.5,1), opacity .6s .5s;transform-origin:20% 100%;z-index:2}
+.giftbox .lid::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:26px;transform:translateX(-50%);background:var(--gold)}
+.giftbox .bow{position:absolute;left:50%;top:-34px;transform:translateX(-50%);width:96px;height:40px}
+.giftbox:hover .lid{transform:rotate(-3deg)}
+.giftbox.open .lid{transform:translate(-30px,-90px) rotate(-28deg);opacity:0}
+.giftbox.shake{animation:shake .6s ease}
+@keyframes shake{0%,100%{transform:none}20%{transform:rotate(-5deg)}40%{transform:rotate(5deg)}60%{transform:rotate(-3deg)}80%{transform:rotate(3deg)}}
+.reveal-name{font-family:var(--display);font-size:clamp(40px,12vw,60px);color:var(--cherry);line-height:1.05;margin:6px 0 10px;
+  animation:rise .8s .2s both cubic-bezier(.2,1.3,.4,1)}
+@keyframes rise{from{opacity:0;transform:translateY(24px) scale(.9)}to{opacity:1;transform:none}}
+.sparkles{position:absolute;inset:0;pointer-events:none}
+.sparkles i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold);opacity:0}
+.open .sparkles i{animation:spark 1.1s ease-out forwards}
+@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.4)}}
+
+/* ---- administración ---- */
+table.members{width:100%;border-collapse:collapse;font-size:15.5px}
+table.members th{text-align:left;font-weight:600;color:var(--muted);font-size:14px;padding:6px 6px;border-bottom:1px solid var(--line)}
+table.members td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.switch{position:relative;display:inline-block;vertical-align:middle;width:46px;height:28px;flex:none}
+.switch input{opacity:0;width:100%;height:100%;margin:0;position:absolute;cursor:pointer;z-index:1}
+.switch span{position:absolute;inset:0;background:#cfc6b6;border-radius:99px;transition:.2s}
+.switch span::after{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch input:checked+span{background:var(--pine)}
+.switch input:checked+span::after{transform:translateX(18px)}
+.switch input:disabled+span{opacity:.5}
+.switch input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (min-width:560px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--cream);border-radius:var(--r-md);padding:12px 14px}
+.stat b{font-family:var(--display);font-weight:400;font-size:28px;color:var(--pine-deep);display:block;line-height:1.1}
+dialog{border:0;border-radius:var(--r-lg);padding:22px;max-width:440px;width:calc(100% - 32px);background:var(--paper);color:var(--ink)}
+dialog::backdrop{background:rgba(18,48,31,.45)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/></g></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2 2M14 9l2 2"/></g></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.6 6.2 6.7.5-5.1 4.4 1.6 6.5L12 16.6l-5.8 3.5 1.6-6.5-5.1-4.4 6.7-.5z" fill="currentColor"/></symbol>
+  <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 3l6 8h-3l4 6H5l4-6H6z M11 17h2v4h-2z" fill="currentColor"/></symbol>
+</svg>
+
+<div id="app"></div>
+
+<template id="garland">
+  <svg class="garland" viewBox="0 0 620 46" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 6 C 120 40, 200 40, 310 14 S 500 40, 620 6" fill="none" stroke="#1d4634" stroke-width="5" stroke-linecap="round"/>
+    <path d="M0 6 C 120 40, 200 40, 310 14 S 500 40, 620 6" fill="none" stroke="#2f6b47" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/>
+    <g>
+      <circle cx="62" cy="21" r="4.5" fill="#b3263a"/><circle cx="135" cy="31" r="4.5" fill="#c39a4e"/>
+      <circle cx="210" cy="30" r="4.5" fill="#b3263a"/><circle cx="270" cy="21" r="4.5" fill="#c39a4e"/>
+      <circle cx="350" cy="18" r="4.5" fill="#b3263a"/><circle cx="420" cy="30" r="4.5" fill="#c39a4e"/>
+      <circle cx="495" cy="31" r="4.5" fill="#b3263a"/><circle cx="565" cy="20" r="4.5" fill="#c39a4e"/>
+    </g>
+  </svg>
+</template>
+
+<script>
+"use strict";
+const $app = document.getElementById("app");
+const COLORS = ["#1d4634","#b3263a","#a07c35","#2f6b47","#8e1b2c","#5b6b3a","#7a4a2a"];
+const state = { user: null, members: [] };
+
+// ---------- utilidades ----------
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const icon = (id) => `<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const colorFor = (name) => COLORS[[...name].reduce((a,c)=>a+c.charCodeAt(0),0) % COLORS.length];
+const initial = (name) => `<span class="initial" style="background:${colorFor(name)}" aria-hidden="true">${esc(name.trim()[0] || "?")}</span>`;
+const garland = () => document.getElementById("garland").innerHTML;
+
+async function api(path, opts = {}) {
+  const res = await fetch("/api" + path, {
+    method: opts.method || "GET",
+    headers: opts.body ? { "content-type": "application/json" } : {},
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+    credentials: "same-origin",
+  });
+  let data = {};
+  try { data = await res.json(); } catch {}
+  if (res.status === 401 && path !== "/login" && path !== "/password") { state.user = null; renderLogin(); throw new Error("sesión"); }
+  if (!res.ok) throw new Error(data.error || "No se pudo completar. Revisa tu conexión e intenta otra vez.");
+  return data;
+}
+
+let toastTimer;
+function toast(msg) {
+  document.querySelector(".toast")?.remove();
+  const t = document.createElement("div");
+  t.className = "toast"; t.setAttribute("role","status"); t.textContent = msg;
+  document.body.appendChild(t);
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.remove(), 2800);
+}
+
+function busy(btn, on, label) {
+  if (!btn) return;
+  if (on) { btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.textContent = label || "Un momento…"; }
+  else { btn.disabled = false; if (btn.dataset.label) btn.innerHTML = btn.dataset.label; }
+}
+
+// ---------- ingreso ----------
+async function renderLogin(adminMode = false) {
+  document.title = "Navidad en Familia";
+  if (!state.members.length) {
+    try { state.members = (await api("/members")).members; } catch (e) { /* se muestra vacío */ }
+  }
+  $app.innerHTML = `
+  <main class="login view">
+    <div class="login-hero">
+      <svg class="tree" viewBox="0 0 92 110" aria-hidden="true">
+        <path d="M46 14 L74 52 H60 L84 86 H8 L32 52 H18 Z" fill="#1d4634"/>
+        <path d="M24 70 Q46 80 70 66" fill="none" stroke="#c39a4e" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M30 48 Q46 56 62 46" fill="none" stroke="#c39a4e" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="38" cy="64" r="3.5" fill="#b3263a"/><circle cx="58" cy="78" r="3.5" fill="#b3263a"/><circle cx="50" cy="44" r="3" fill="#fffaf2"/>
+        <rect x="40" y="86" width="12" height="14" rx="2" fill="#7a4a2a"/>
+        <path d="M46 2l3.2 7.4 8 .6-6.1 5.2 1.9 7.8L46 18.8l-7 4.2 1.9-7.8L34.8 10l8-.6z" fill="#c39a4e"/>
+      </svg>
+      <h1>Navidad en Familia</h1>
+      <p>${adminMode ? "Entrada para administrar la app: integrantes, contraseñas y sorteo." : "Nuestro rincón para compartir deseos y descubrir, en secreto, a quién le toca tu regalo."}</p>
+    </div>
+    <form class="card stack" id="loginForm" novalidate>
+      ${adminMode ? `<input type="hidden" name="who" value="admin">` : `
+      <fieldset style="border:0;padding:0;margin:0" class="stack">
+        <legend style="font-weight:600;font-size:15px;margin-bottom:8px">¿Quién eres?</legend>
+        <div class="who">
+          ${state.members.map((m) => `
+            <input type="radio" name="who" id="who-${esc(m.id)}" value="${esc(m.id)}">
+            <label for="who-${esc(m.id)}">${initial(m.name)}<span>${esc(m.name)}</span></label>`).join("")}
+        </div>
+      </fieldset>`}
+      <label class="field">Contraseña
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <p class="error hidden" id="loginError" role="alert"></p>
+      <button class="btn block" type="submit">Entrar</button>
+    </form>
+    <p style="text-align:center;margin-top:18px">
+      <button class="btn quiet" type="button" id="switchMode">${adminMode ? "Volver a la entrada de la familia" : "Entrar como administración"}</button>
+    </p>
+  </main>`;
+  document.getElementById("switchMode").onclick = () => renderLogin(!adminMode);
+  const form = document.getElementById("loginForm");
+  const err = document.getElementById("loginError");
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    err.classList.add("hidden");
+    if (!fd.get("who")) { err.textContent = "Elige tu nombre primero."; err.classList.remove("hidden"); return; }
+    if (!fd.get("password")) { err.textContent = "Escribe tu contraseña."; err.classList.remove("hidden"); return; }
+    const btn = form.querySelector("button[type=submit]");
+    busy(btn, true, "Entrando…");
+    try {
+      await api("/login", { method: "POST", body: { memberId: fd.get("who"), password: fd.get("password") } });
+      await boot();
+    } catch (ex) { err.textContent = ex.message; err.classList.remove("hidden"); busy(btn, false); }
+  };
+}
+
+// ---------- marco con navegación ----------
+const TABS_MEMBER = [
+  ["inicio","Inicio","home"], ["lista","Mi lista","list"], ["amigo","Amigo secreto","gift"], ["perfil","Mi perfil","user"],
+];
+const TABS_ADMIN = [["admin","Administración","key"], ["perfil","Mi perfil","user"]];
+
+function frame(route, inner) {
+  const tabs = state.user.isAdmin ? TABS_ADMIN : TABS_MEMBER;
+  $app.innerHTML = `
+    <nav class="tabs" aria-label="Secciones">
+      ${tabs.map(([r,l,i]) => `<a href="#${r}" ${r===route?'aria-current="page"':""}>${icon(i)}<span>${l}</span></a>`).join("")}
+    </nav>
+    <div class="shell">
+      ${garland()}
+      <header class="topbar">
+        <a class="brand" href="#${state.user.isAdmin ? "admin" : "inicio"}">${icon("tree")}Navidad en Familia</a>
+        <button class="btn quiet" id="logout">Salir</button>
+      </header>
+      <main class="view" id="view">${inner}</main>
+    </div>`;
+  document.getElementById("logout").onclick = async () => {
+    try { await api("/logout", { method: "POST", body: {} }); } catch {}
+    state.user = null; location.hash = ""; renderLogin();
+  };
+  window.scrollTo(0, 0);
+  return document.getElementById("view");
+}
+
+// ---------- inicio ----------
+async function renderHome() {
+  const d = await api("/dashboard");
+  const w = d.wishes;
+  const listState = w.count === 0 ? `<span class="pill red">Aún vacía</span>`
+    : w.count >= w.max ? `<span class="pill">Completa</span>` : `<span class="pill gold">En preparación</span>`;
+  let secret;
+  if (!d.draw.done) secret = `<span class="pill gold">Sorteo pendiente</span>
+      <p>¡La magia de la Navidad está por comenzar! Pronto descubrirás a quién tendrás que sorprender este año.</p>`;
+  else if (!d.draw.participating) secret = `<span class="pill red">No participas</span><p>Este año no estás en el sorteo. Si es un error, avísale a quien administra la app.</p>`;
+  else if (!d.draw.revealed) secret = `<span class="pill red">¡Ya se hizo el sorteo!</span><p>Tu regalo misterioso te está esperando. Ábrelo cuando estés a solas.</p>
+      <span class="btn red">Descubrir mi amigo secreto</span>`;
+  else secret = `<span class="pill">Ya lo descubriste</span><p>Vuelve cuando quieras para ver su lista de deseos.</p>`;
+
+  frame("inicio", `
+    <section class="hello">
+      <h1>¡Hola, ${esc(d.name)}! 🎄</h1>
+      <p>Ya estamos preparando la Navidad. Descubre los deseos de esta temporada y prepárate para sorprender a alguien especial.</p>
+    </section>
+    <div class="stack" style="margin-top:20px">
+      <a class="card home-card" href="#lista">
+        <div class="head"><span class="icon" style="background:#f6dfe2;color:var(--cherry)">${icon("list")}</span>
+          <div><h2>Mi lista de deseos</h2><p class="muted small">${w.count} de ${w.max} deseos</p></div></div>
+        <div class="meter" aria-hidden="true">${Array.from({length:w.max},(_,i)=>`<span class="${i<w.count?"on":""}"></span>`).join("")}</div>
+        <div class="row">${listState}</div>
+        ${w.count ? `<ul class="mini-list">${w.titles.slice(0,3).map(t=>`<li>${esc(t)}</li>`).join("")}${w.count>3?`<li class="muted">y ${w.count-3} más</li>`:""}</ul>`
+          : `<p class="muted">Agrega lo que te gustaría recibir. Así tu amigo secreto acertará.</p>`}
+        <span class="btn ghost">${w.count ? "Editar mi lista" : "Agregar mi primer deseo"}</span>
+      </a>
+      <a class="card home-card" href="#amigo">
+        <div class="head"><span class="icon" style="background:var(--gold-soft);color:#7a5a1c">${icon("gift")}</span>
+          <h2>Mi amigo secreto</h2></div>
+        ${secret}
+      </a>
+    </div>`);
+}
+
+// ---------- lista de deseos ----------
+let wishCache = [];
+async function renderList() {
+  const d = await api("/wishes");
+  wishCache = d.wishes;
+  const full = d.wishes.length >= d.max;
+  const view = frame("lista", `
+    <section class="hello">
+      <h1>Mi lista de deseos</h1>
+      <p>Solo tú puedes cambiarla. Quien te reciba en el sorteo podrá verla, pero nadie más.</p>
+    </section>
+    <div class="row" style="justify-content:space-between;margin:18px 0 12px">
+      <span class="pill ${full?"":"gold"}">${d.wishes.length} de ${d.max} deseos</span>
+      ${full ? "" : `<button class="btn red" id="addWish">Agregar deseo</button>`}
+    </div>
+    <div class="stack" id="wishList">
+      ${d.wishes.length ? d.wishes.map(wishCard(true)).join("") : `
+        <div class="card empty">${icon("gift")}<h3 style="margin-top:8px">Tu lista está esperando</h3>
+        <p class="muted" style="margin-top:6px">Agrega hasta ${d.max} cosas que te gustaría recibir o que necesites.</p></div>`}
+    </div>
+    ${full ? `<p class="muted small" style="margin-top:14px">Llegaste al máximo de ${d.max}. Borra uno si quieres agregar otro.</p>` : ""}
+  `);
+  view.querySelector("#addWish")?.addEventListener("click", () => wishDialog());
+  view.querySelectorAll("[data-edit]").forEach((b) => b.onclick = () => wishDialog(wishCache.find((w) => w.id === b.dataset.edit)));
+  view.querySelectorAll("[data-del]").forEach((b) => b.onclick = async () => {
+    const w = wishCache.find((x) => x.id === b.dataset.del);
+    if (!(await confirmBox(`¿Borrar “${w.title}” de tu lista?`, "Borrar deseo"))) return;
+    try { await api("/wishes/" + w.id, { method: "DELETE" }); toast("Deseo borrado"); renderList(); } catch (e) { toast(e.message); }
+  });
+}
+
+const wishCard = (editable) => (w) => `
+  <article class="card wish">
+    ${w.image ? `<img class="thumb" src="${esc(w.image)}" alt="">` : `<span class="thumb">${icon("gift")}</span>`}
+    <div>
+      <h3>${esc(w.title)}</h3>
+      ${w.description ? `<p class="desc">${esc(w.description)}</p>` : ""}
+      ${w.link ? `<a class="ext" href="${esc(w.link)}" target="_blank" rel="noopener noreferrer">Ver dónde encontrarlo</a>` : ""}
+      ${editable ? `<div class="actions"><button class="btn quiet" data-edit="${esc(w.id)}">Editar</button><button class="btn quiet" data-del="${esc(w.id)}">Borrar</button></div>` : ""}
+    </div>
+  </article>`;
+
+function wishDialog(w) {
+  const dlg = document.createElement("dialog");
+  let image = w?.image || "";
+  dlg.innerHTML = `
+    <form class="stack" method="dialog" novalidate>
+      <h2>${w ? "Editar deseo" : "Nuevo deseo"}</h2>
+      <label class="field">Nombre del regalo
+        <input type="text" name="title" maxlength="120" required value="${esc(w?.title)}" placeholder="Ej: Libro de fantasía">
+      </label>
+      <label class="field">Descripción <span class="hint">Opcional. Talla, color, autor…</span>
+        <textarea name="description" maxlength="600">${esc(w?.description)}</textarea>
+      </label>
+      <label class="field">Enlace de referencia <span class="hint">Opcional. Pega el link de una tienda.</span>
+        <input type="url" name="link" maxlength="600" value="${esc(w?.link)}" placeholder="https://">
+      </label>
+      <div class="field">Imagen <span class="hint">Opcional.</span>
+        <div class="photo-pick">
+          <img id="prev" alt="" class="${image ? "" : "hidden"}" src="${esc(image)}">
+          <label class="btn ghost" style="cursor:pointer">${image ? "Cambiar foto" : "Elegir foto"}<input type="file" accept="image/*" hidden id="file"></label>
+          <button type="button" class="btn quiet ${image ? "" : "hidden"}" id="rmImg">Quitar</button>
+        </div>
+      </div>
+      <p class="error hidden" role="alert"></p>
+      <div class="row" style="justify-content:flex-end">
+        <button type="button" class="btn quiet" value="cancel" id="cancel">Cancelar</button>
+        <button type="submit" class="btn">Guardar deseo</button>
+      </div>
+    </form>`;
+  document.body.appendChild(dlg);
+  dlg.showModal();
+  const form = dlg.querySelector("form"), err = dlg.querySelector(".error"), prev = dlg.querySelector("#prev"), rm = dlg.querySelector("#rmImg");
+  dlg.addEventListener("close", () => dlg.remove());
+  dlg.querySelector("#cancel").onclick = () => dlg.close();
+  rm.onclick = () => { image = ""; prev.classList.add("hidden"); rm.classList.add("hidden"); };
+  dlg.querySelector("#file").onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    try { image = await shrinkImage(f); prev.src = image; prev.classList.remove("hidden"); rm.classList.remove("hidden"); }
+    catch { err.textContent = "No pudimos leer esa imagen. Prueba con otra."; err.classList.remove("hidden"); }
+  };
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    if (!fd.get("title").trim()) { err.textContent = "Escribe el nombre del regalo."; err.classList.remove("hidden"); return; }
+    const btn = form.querySelector("button[type=submit]"); busy(btn, true, "Guardando…");
+    try {
+      await api(w ? "/wishes/" + w.id : "/wishes", { method: w ? "PUT" : "POST",
+        body: { title: fd.get("title"), description: fd.get("description"), link: fd.get("link"), image } });
+      dlg.close(); toast(w ? "Deseo actualizado" : "Deseo agregado"); renderList();
+    } catch (ex) { err.textContent = ex.message; err.classList.remove("hidden"); busy(btn, false); }
+  };
+}
+
+function shrinkImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const max = 640, scale = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+      const ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      let q = 0.8, out = c.toDataURL("image/jpeg", q);
+      while (out.length > 260000 && q > 0.35) { q -= 0.1; out = c.toDataURL("image/jpeg", q); }
+      resolve(out);
+    };
+    img.onerror = reject; img.src = url;
+  });
+}
+
+function confirmBox(message, action, opts = {}) {
+  return new Promise((resolve) => {
+    const dlg = document.createElement("dialog");
+    dlg.innerHTML = `<form class="stack" method="dialog">
+      <h3>${esc(message)}</h3>
+      ${opts.detail ? `<p class="muted">${esc(opts.detail)}</p>` : ""}
+      ${opts.typeWord ? `<label class="field">Escribe ${esc(opts.typeWord)} para confirmar<input type="text" name="w" autocomplete="off"></label>` : ""}
+      <div class="row" style="justify-content:flex-end">
+        <button class="btn quiet" value="no">Cancelar</button>
+        <button class="btn red" value="yes">${esc(action)}</button>
+      </div></form>`;
+    document.body.appendChild(dlg); dlg.showModal();
+    dlg.addEventListener("close", () => {
+      const v = dlg.returnValue === "yes" && (!opts.typeWord || dlg.querySelector("[name=w]").value.trim());
+      dlg.remove(); resolve(v);
+    });
+  });
+}
+
+// ---------- amigo secreto ----------
+async function renderSecret() {
+  const s = await api("/secret");
+  if (!s.drawDone) {
+    frame("amigo", `
+      <div class="card reveal-stage">
+        <div class="giftbox" aria-hidden="true" style="cursor:default">${giftInner()}</div>
+        <h1 style="margin-top:8px">Todavía no hay sorteo</h1>
+        <p class="muted" style="margin-top:10px;max-width:40ch">¡La magia de la Navidad está por comenzar! Pronto descubrirás a quién tendrás que sorprender este año.</p>
+      </div>`);
+    return;
+  }
+  if (!s.participating) {
+    frame("amigo", `<div class="card reveal-stage"><h1>No estás en este sorteo</h1>
+      <p class="muted" style="margin-top:10px">Si crees que es un error, avísale a quien administra la app.</p></div>`);
+    return;
+  }
+  if (s.revealed) return showReveal(await api("/secret/reveal", { method: "POST", body: {} }), false);
+  const view = frame("amigo", `
+    <div class="card reveal-stage">
+      <h1>¡Llegó el momento!</h1>
+      <p class="muted" style="margin-top:10px;max-width:38ch">Descubre a quién tendrás que sorprender. Mejor hazlo a solas, es un secreto.</p>
+      <button class="giftbox" id="gift" aria-label="Abrir el regalo">${giftInner()}</button>
+      <button class="btn red" id="open">Descubrir mi amigo secreto</button>
+    </div>`);
+  const go = async () => {
+    const gift = view.querySelector("#gift"); const btn = view.querySelector("#open");
+    btn.disabled = true; gift.disabled = true;
+    let data;
+    try { data = await api("/secret/reveal", { method: "POST", body: {} }); }
+    catch (e) { toast(e.message); btn.disabled = false; gift.disabled = false; return; }
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    gift.classList.add("shake");
+    setTimeout(() => gift.classList.add("open"), reduced ? 0 : 650);
+    setTimeout(() => showReveal(data, true), reduced ? 0 : 1700);
+  };
+  view.querySelector("#open").onclick = go;
+  view.querySelector("#gift").onclick = go;
+}
+
+function giftInner() {
+  const sp = Array.from({length:12},(_,i)=>{const a=i/12*Math.PI*2;return `<i style="left:96px;top:90px;--x:${Math.cos(a)*110}px;--y:${Math.sin(a)*110}px;animation-delay:${(i%3)*.06}s"></i>`}).join("");
+  return `<span class="sparkles">${sp}</span>
+    <span class="lid"><svg class="bow" viewBox="0 0 96 40"><path d="M48 36C30 10 6 6 10 24c3 12 26 12 38 12zM48 36C66 10 90 6 86 24c-3 12-26 12-38 12z" fill="#c39a4e"/><circle cx="48" cy="34" r="7" fill="#a07c35"/></svg></span>
+    <span class="box"></span>`;
+}
+
+function showReveal(data, fresh) {
+  const r = data.receiver;
+  frame("amigo", `
+    <div class="card reveal-stage">
+      <p class="muted">${fresh ? "¡Tu amigo secreto es…!" : "Tu amigo secreto es"}</p>
+      <div class="reveal-name">${esc(r.name)} 🎁</div>
+      <p style="max-width:38ch">Este año tendrás la misión de encontrar un regalo especial para ${esc(r.name)}.</p>
+    </div>
+    <section style="margin-top:26px">
+      <h2>Lista de deseos de ${esc(r.name)}</h2>
+      <div class="stack" style="margin-top:14px">
+        ${data.wishes.length ? data.wishes.map(wishCard(false)).join("")
+          : `<div class="card empty"><p class="muted">${esc(r.name)} todavía no ha agregado deseos. Vuelve a mirar en unos días.</p></div>`}
+      </div>
+    </section>`);
+}
+
+// ---------- perfil ----------
+function renderProfile() {
+  const view = frame("perfil", `
+    <section class="hello"><h1>Mi perfil</h1></section>
+    <div class="card stack" style="margin-top:18px">
+      <div class="row">${initial(state.user.name)}<div><h3>${esc(state.user.name)}</h3>
+      <p class="muted small">${state.user.isAdmin ? "Cuenta de administración" : "Integrante de la familia"}</p></div></div>
+    </div>
+    <form class="card stack" style="margin-top:16px" id="pwForm" novalidate>
+      <h2>Cambiar contraseña</h2>
+      <label class="field">Contraseña actual<input type="password" name="current" autocomplete="current-password"></label>
+      <label class="field">Nueva contraseña <span class="hint">Al menos 6 caracteres.</span><input type="password" name="next" autocomplete="new-password"></label>
+      <label class="field">Repite la nueva contraseña<input type="password" name="again" autocomplete="new-password"></label>
+      <p class="error hidden" role="alert"></p>
+      <button class="btn" type="submit">Guardar nueva contraseña</button>
+    </form>`);
+  const form = view.querySelector("#pwForm"), err = form.querySelector(".error");
+  form.onsubmit = async (e) => {
+    e.preventDefault(); err.classList.add("hidden");
+    const fd = new FormData(form);
+    if (fd.get("next") !== fd.get("again")) { err.textContent = "Las dos contraseñas nuevas no son iguales."; err.classList.remove("hidden"); return; }
+    const btn = form.querySelector("button"); busy(btn, true, "Guardando…");
+    try { await api("/password", { method: "POST", body: { current: fd.get("current"), next: fd.get("next") } }); form.reset(); toast("Contraseña guardada"); }
+    catch (ex) { err.textContent = ex.message; err.classList.remove("hidden"); }
+    busy(btn, false);
+  };
+}
+
+// ---------- administración ----------
+async function renderAdmin() {
+  const s = await api("/admin/state");
+  const enabled = s.members.filter((m) => m.enabled);
+  const withList = s.members.filter((m) => m.wishes > 0);
+  const view = frame("admin", `
+    <section class="hello"><h1>Administración</h1>
+      <p>Desde aquí manejas integrantes, contraseñas y el sorteo. Tú tampoco puedes ver quién le regala a quién.</p></section>
+
+    <div class="card stack" style="margin-top:18px">
+      <h2>Estado general</h2>
+      <div class="stats">
+        <div class="stat"><b>${s.members.length}</b>integrantes</div>
+        <div class="stat"><b>${enabled.length}</b>participan</div>
+        <div class="stat"><b>${withList.length}</b>con lista</div>
+        <div class="stat"><b>${s.members.length - withList.length}</b>sin deseos aún</div>
+      </div>
+      ${s.members.length - withList.length ? `<p class="muted small">Sin deseos: ${s.members.filter(m=>!m.wishes).map(m=>esc(m.name)).join(", ")}</p>` : ""}
+    </div>
+
+    <div class="card stack" style="margin-top:16px">
+      <h2>Sorteo de amigo secreto</h2>
+      ${s.draw.done ? `
+        <div class="row"><span class="pill">Sorteo realizado</span><span class="muted small">${new Date(s.draw.at).toLocaleString("es-CL",{dateStyle:"long",timeStyle:"short"})} · ${s.draw.count} participantes</span></div>
+        <p class="muted small">Ya lo descubrieron: ${s.members.filter(m=>m.revealed).map(m=>esc(m.name)).join(", ") || "nadie todavía"}.</p>
+        <button class="btn ghost" id="reset">Reiniciar sorteo</button>` : `
+        <p>Participarán: <b>${enabled.map((m) => esc(m.name)).join(", ") || "nadie"}</b>.</p>
+        <p class="muted small">Puedes sacar o agregar participantes con los interruptores de abajo. El sorteo se hace una sola vez.</p>
+        <button class="btn red" id="draw" ${enabled.length < 2 ? "disabled" : ""}>Hacer el sorteo</button>`}
+    </div>
+
+    <div class="card stack" style="margin-top:16px">
+      <h2>Integrantes</h2>
+      <div style="overflow-x:auto"><table class="members">
+        <thead><tr><th>Nombre</th><th>Deseos</th><th>Participa</th><th></th></tr></thead>
+        <tbody>${s.members.map((m) => `
+          <tr><td><div class="row" style="flex-wrap:nowrap">${initial(m.name)}<span>${esc(m.name)}</span></div></td>
+            <td>${m.wishes}</td>
+            <td><label class="switch"><input type="checkbox" data-toggle="${esc(m.id)}" ${m.enabled?"checked":""} ${s.draw.done?"disabled":""} aria-label="${esc(m.name)} participa en el sorteo"><span></span></label></td>
+            <td><button class="btn quiet" data-manage="${esc(m.id)}">Editar</button></td></tr>`).join("")}
+        </tbody></table></div>
+      <button class="btn ghost" id="addMember">Agregar integrante</button>
+    </div>`);
+
+  view.querySelector("#draw")?.addEventListener("click", async (e) => {
+    if (!(await confirmBox("¿Hacer el sorteo ahora?", "Sí, sortear", { detail: `Participan ${enabled.length} personas. Cada una verá a quién le regala desde su propia cuenta.` }))) return;
+    try { await api("/admin/draw", { method: "POST", body: {} }); toast("¡Sorteo realizado!"); renderAdmin(); } catch (ex) { toast(ex.message); }
+  });
+  view.querySelector("#reset")?.addEventListener("click", async () => {
+    const w = await confirmBox("¿Reiniciar el sorteo?", "Reiniciar", { detail: "Se borrarán todas las asignaciones y habrá que sortear de nuevo. Las listas de deseos no se tocan.", typeWord: "REINICIAR" });
+    if (!w) return;
+    try { await api("/admin/draw/reset", { method: "POST", body: { confirm: w } }); toast("Sorteo reiniciado"); renderAdmin(); } catch (ex) { toast(ex.message); }
+  });
+  view.querySelectorAll("[data-toggle]").forEach((c) => c.onchange = async () => {
+    try { await api("/admin/members/" + c.dataset.toggle, { method: "PUT", body: { enabled: c.checked } }); renderAdmin(); }
+    catch (ex) { toast(ex.message); c.checked = !c.checked; }
+  });
+  view.querySelectorAll("[data-manage]").forEach((b) => b.onclick = () => memberDialog(s.members.find((m) => m.id === b.dataset.manage)));
+  view.querySelector("#addMember").onclick = () => memberDialog(null);
+}
+
+function memberDialog(m) {
+  const dlg = document.createElement("dialog");
+  dlg.innerHTML = `<form class="stack" novalidate>
+    <h2>${m ? "Editar a " + esc(m.name) : "Nuevo integrante"}</h2>
+    <label class="field">Nombre<input type="text" name="name" maxlength="40" value="${esc(m?.name)}"></label>
+    <label class="field">${m ? "Nueva contraseña" : "Contraseña"} <span class="hint">${m ? "Déjala vacía si no quieres cambiarla." : "Al menos 6 caracteres. Compártela en privado."}</span>
+      <input type="text" name="password" autocomplete="off" maxlength="100"></label>
+    <p class="error hidden" role="alert"></p>
+    <div class="row" style="justify-content:flex-end">
+      <button type="button" class="btn quiet" id="cancel">Cancelar</button>
+      <button type="submit" class="btn">${m ? "Guardar cambios" : "Agregar integrante"}</button>
+    </div></form>`;
+  document.body.appendChild(dlg); dlg.showModal();
+  dlg.addEventListener("close", () => dlg.remove());
+  dlg.querySelector("#cancel").onclick = () => dlg.close();
+  const form = dlg.querySelector("form"), err = form.querySelector(".error");
+  form.onsubmit = async (e) => {
+    e.preventDefault(); err.classList.add("hidden");
+    const name = form.name.value.trim(), pw = form.password.value.trim();
+    const btn = form.querySelector("button[type=submit]"); busy(btn, true, "Guardando…");
+    try {
+      if (m) {
+        if (name !== m.name) await api("/admin/members/" + m.id, { method: "PUT", body: { name } });
+        if (pw) await api("/admin/members/" + m.id + "/password", { method: "POST", body: { password: pw } });
+      } else {
+        await api("/admin/members", { method: "POST", body: { name, password: pw } });
+      }
+      state.members = [];
+      dlg.close(); toast(m ? "Cambios guardados" : "Integrante agregado"); renderAdmin();
+    } catch (ex) { err.textContent = ex.message; err.classList.remove("hidden"); busy(btn, false); }
+  };
+}
+
+// ---------- rutas ----------
+async function route() {
+  if (!state.user) return renderLogin();
+  const r = (location.hash.replace(/^#\/?/, "") || (state.user.isAdmin ? "admin" : "inicio"));
+  try {
+    if (state.user.isAdmin) { if (r === "perfil") renderProfile(); else await renderAdmin(); return; }
+    if (r === "lista") await renderList();
+    else if (r === "amigo") await renderSecret();
+    else if (r === "perfil") renderProfile();
+    else await renderHome();
+  } catch (e) { if (e.message !== "sesión") toast(e.message); }
+}
+
+async function boot() {
+  try { state.user = (await api("/me")).user; } catch { return; }
+  route();
+}
+window.addEventListener("hashchange", route);
+boot();
+</script>
+</body>
+</html>
