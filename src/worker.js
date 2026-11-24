@@ -5,6 +5,7 @@
 import { DurableObject } from "cloudflare:workers";
 import APP_HTML from "./app.html";
 import { SEED } from "./seed.js";
+import FAMILIA from "./familia.jpg";
 
 const SESSION_DAYS = 30;
 const MAX_WISHES = 6;
@@ -17,6 +18,9 @@ export default {
     if (url.pathname.startsWith("/api/")) {
       const stub = env.CASA.get(env.CASA.idFromName("casa"));
       return stub.fetch(request);
+    }
+    if (url.pathname === "/familia.jpg") {
+      return new Response(FAMILIA, { headers: { "content-type": "image/jpeg", "cache-control": "public, max-age=86400" } });
     }
     return new Response(APP_HTML, {
       headers: {

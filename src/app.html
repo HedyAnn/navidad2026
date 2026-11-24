@@ -88,9 +88,14 @@ textarea{min-height:84px;resize:vertical}
   padding:12px 20px;border-radius:999px;font-weight:600;z-index:50;box-shadow:0 8px 24px rgba(18,48,31,.25);max-width:calc(100% - 32px);text-align:center}
 
 /* ---- ingreso ---- */
-.login{max-width:460px;margin:0 auto;padding:10px 16px 40px}
+.login{max-width:460px;margin:0 auto;padding:26px 16px 40px}
 .login-hero{text-align:center;padding:8px 0 22px}
-.login-hero .tree{width:92px;height:110px;margin:0 auto 10px;display:block}
+.family{margin:0 auto 22px;max-width:400px;background:var(--paper);padding:10px 10px 0;border-radius:20px;
+  box-shadow:0 1px 0 var(--line),0 14px 30px -14px rgba(18,48,31,.35);transform:rotate(-1.2deg);position:relative}
+.family::after{content:"";display:block;height:14px}
+.family img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:12px}
+.family::before{content:"";position:absolute;left:50%;top:-12px;width:84px;height:24px;transform:translateX(-50%) rotate(2deg);
+  background:repeating-linear-gradient(90deg,var(--cherry) 0 10px,#fffaf2 10px 20px);opacity:.9;border-radius:3px}
 .login-hero p{color:var(--muted);margin-top:10px}
 .who{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .who input{position:absolute;opacity:0;pointer-events:none}
@@ -251,14 +256,9 @@ async function renderLogin(adminMode = false) {
   $app.innerHTML = `
   <main class="login view">
     <div class="login-hero">
-      <svg class="tree" viewBox="0 0 92 110" aria-hidden="true">
-        <path d="M46 14 L74 52 H60 L84 86 H8 L32 52 H18 Z" fill="#1d4634"/>
-        <path d="M24 70 Q46 80 70 66" fill="none" stroke="#c39a4e" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M30 48 Q46 56 62 46" fill="none" stroke="#c39a4e" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="38" cy="64" r="3.5" fill="#b3263a"/><circle cx="58" cy="78" r="3.5" fill="#b3263a"/><circle cx="50" cy="44" r="3" fill="#fffaf2"/>
-        <rect x="40" y="86" width="12" height="14" rx="2" fill="#7a4a2a"/>
-        <path d="M46 2l3.2 7.4 8 .6-6.1 5.2 1.9 7.8L46 18.8l-7 4.2 1.9-7.8L34.8 10l8-.6z" fill="#c39a4e"/>
-      </svg>
+      <figure class="family">
+        <img src="/familia.jpg" width="800" height="800" alt="Retrato ilustrado de toda la familia con sus mascotas">
+      </figure>
       <h1>Navidad en Familia</h1>
       <p>${adminMode ? "Entrada para administrar la app: integrantes, contraseñas y sorteo." : "Nuestro rincón para compartir deseos y descubrir, en secreto, a quién le toca tu regalo."}</p>
     </div>
